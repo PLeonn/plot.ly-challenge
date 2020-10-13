@@ -31,3 +31,26 @@ function renderCharts() {
         var otu_ids_final  = otu_ids.map(x => "OTU:" + " " + x);
         var otu_labels = dataSamples.map(({ otu_labels }) => otu_labels.slice(0, 10))[0];
         var sample_values = dataSamples.map(({ sample_values }) => sample_values.slice(0, 10))[0];
+
+        // Populate dictionary with data for the bar graph
+        var barData = [{
+            x: sample_values.reverse(),
+            y: otu_ids_final.reverse(),
+            text: otu_labels.reverse(),
+            type: "bar",
+            orientation: "h"
+        }];
+
+        // Populate dictionary with data for the graph's "bubbles"
+        var bubbleData = [{
+            x: all_otu_ids,
+            y: all_sample_values,
+            text: all_otu_labels,
+            mode: "markers",
+            marker: {
+                size: all_sample_values,
+                color: all_otu_ids,
+            }
+        }];
+
+        
