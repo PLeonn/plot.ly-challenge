@@ -32,8 +32,8 @@ function renderCharts() {
         var otu_labels = dataSamples.map(({ otu_labels }) => otu_labels.slice(0, 10))[0];
         var sample_values = dataSamples.map(({ sample_values }) => sample_values.slice(0, 10))[0];
 
-        // Populate dictionary with data for the bar graph
-        var barData = [{
+        // Populate dictionary with info for the bar graph
+        var barInfo = [{
             x: sample_values.reverse(),
             y: otu_ids_final.reverse(),
             text: otu_labels.reverse(),
@@ -41,8 +41,8 @@ function renderCharts() {
             orientation: "h"
         }];
 
-        // Populate dictionary with data for the graph's "bubbles"
-        var bubbleData = [{
+        // Populate dictionary with info for the graph's "bubbles"
+        var bubbleInfo = [{
             x: all_otu_ids,
             y: all_sample_values,
             text: all_otu_labels,
@@ -53,4 +53,14 @@ function renderCharts() {
             }
         }];
 
-        
+        // Create the plots
+        Plotly.newPlot("bar", barData);
+        Plotly.newPlot("bubble", bubbleData);
+    });
+};
+
+// Create option change function
+function optionChanged(id) {
+    renderCharts(id);
+    grabMetaData(id);
+}
