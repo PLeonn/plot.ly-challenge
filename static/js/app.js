@@ -54,13 +54,37 @@ function renderCharts() {
         }];
 
         // Create the plots
-        Plotly.newPlot("bar", barData);
-        Plotly.newPlot("bubble", bubbleData);
+        Plotly.newPlot("bar", barInfo);
+        Plotly.newPlot("bubble", bubbleInfo);
     });
 };
-
+function init(){
+    grabMetaData();
+    renderCharts();
+}
 // Create option change function
 function optionChanged(id) {
     renderCharts(id);
     grabMetaData(id);
 }
+
+// Add dropdown menu functionality
+function dropdownMenu() {
+
+    // Select dropdown menu
+    var dropdown = d3.select("#selDataset");
+    d3.json("samples.json").then(function(data) {
+        console.log(data);
+        data.names.forEach(function(name) {
+            dropdown.append("option").text(name).property("value", name);
+        });
+
+        metaData(data.names[0]);
+        charts(data.names[0]);
+    });    
+};
+
+// Call dropdown function
+dropdownMenu();
+// Call init function
+init();
